@@ -56,7 +56,7 @@
                 <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
                   <view class="container">
                     <view class="title">
-                    <view wx:if="{{!isMainChartDisplay}}" bindtap="backToMainChart">刷新</view>
+                    <view wx:if="{{!isMainChartDisplay}}" bindtap="backToMainChart">点击此处刷新</view>
                     {{chartTitle}}
                     </view>
                       <canvas canvas-id="columnCanvas" class="canvas"></canvas>
