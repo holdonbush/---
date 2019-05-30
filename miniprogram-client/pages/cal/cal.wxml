@@ -17,6 +17,10 @@
                           <view class="weui-cell__bd">昨日使用</view>
                           <view class="weui-cell__ft">{{yest}}</view>
                       </view>
+                      <view class="weui-cell">
+                          <view class="weui-cell__bd">过去七天使用</view>
+                          <view class="weui-cell__ft">{{lastWeek}}</view>
+                      </view>
                   </view>
                 </view>
 
@@ -56,7 +60,8 @@
                 <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
                   <view class="container">
                     <view class="title">
-                    <view wx:if="{{!isMainChartDisplay}}" bindtap="backToMainChart">点击此处刷新</view>
+                    <!-- <view wx:if="{{!isMainChartDisplay}}" bindtap="backToMainChart">点击此处刷新</view> -->
+                    <button wx:if="{{!isMainChartDisplay}}" class="weui-btn" type="primary" plain="true" bindtap="backToMainChart">点击此处刷新</button>
                     {{chartTitle}}
                     </view>
                       <canvas canvas-id="columnCanvas" class="canvas"></canvas>

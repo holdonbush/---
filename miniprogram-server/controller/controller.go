@@ -40,11 +40,13 @@ func Cal(w http.ResponseWriter, r *http.Request) {
 	var d data
 	json.Unmarshal(result,&d)
 	fmt.Println(d.Num,d.Explain,d.Name)
+	if d.Num == "" {
+		d.Num = "0"
+	}
 	dbase.Insert(d.Name,d.Num,d.Explain,time.Now().Format("2006-01-02"))
 	total := dbase.Select(time.Now().Format("2006-01-02"),d.Name)
 
 	//
-
 	var b back
 	b.Total = total
 	b.YesterdayT = search(d.Name,-1)

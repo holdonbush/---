@@ -21,6 +21,7 @@ Page({
     n4:"",
     n5:"",
     n6:"",
+    total:0,
   },
   data: {
     tabs: ["最近的消费", "今日消费记录", "图表"],
@@ -47,7 +48,6 @@ Page({
       lang: '',
       success: function(res) {
         global.nickName = res.userInfo.nickName
-        console.log(global.nickName)
       },
       fail: function(res) {},
       complete: function(res) {},
@@ -59,9 +59,11 @@ Page({
       data: data1,
       method:"POST",
       success: function(e) {
+        global.total = e.data.Total
         that.setData({
           thisday:e.data.Total,
           yest:e.data.YesterdayT,
+          lastWeek:e.data.YesterdayT+e.data.Total+e.data.D3t+e.data.D4t+e.data.D5t+e.data.D6t+e.data.D7t,
           chartTitle:"消费情况图",
           isMainChartDisplay: false
         })
@@ -118,6 +120,19 @@ Page({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
     });
+    if(e.currentTarget.id == 2) {
+      console.log(1)
+      this.setData({
+        chartTitle: "消费情况图",
+        isMainChartDisplay: false
+      });
+      columnChart.updateData({
+        series: [{
+          name: '成交量',
+          data: [global.n0, global.n1, global.n2, global.n3, global.n4, global.n5, global.n6]
+        }]
+      });
+    }
   },
   submit:function(e) {
     e.detail.value.name = global.nickName
@@ -128,6 +143,13 @@ Page({
       method:"POST",
       data:e.detail.value,
       success:function(res) {
+        if(e.detail.value.num == "") {
+          global.total = global.total + 0
+        }
+        else {
+          global.total = global.total + parseInt(e.detail.value.num)
+        }
+        console.log(global.total)
         that.setData({
           thisday:res.data.Total,
           form_info:''
